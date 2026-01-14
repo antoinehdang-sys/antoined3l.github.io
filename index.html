@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitale Spielsucht - Verstehen, Erkennen, Handeln</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --warning: #fca311;
+            --success: #2ec4b6;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(58, 12, 163, 0.9), rgba(67, 97, 238, 0.8)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #d11474;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Content Sections */
+        section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            font-size: 2.2rem;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Interactive Test */
+        .test-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .test-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .test-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .test-option {
+            padding: 10px 15px;
+            background-color: #f1f5ff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .test-option:hover {
+            background-color: #e2e8ff;
+        }
+        
+        .test-option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .test-result {
+            display: none;
+            padding: 2rem;
+            background-color: #f8f9ff;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border-left: 5px solid var(--success);
+        }
+        
+        .progress-container {
+            margin-top: 1rem;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+        
+        /* Facts Section */
+        .facts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .fact-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .fact-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Resources */
+        .resources-list {
+            list-style: none;
+        }
+        
+        .resources-list li {
+            padding: 1rem;
+            background-color: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .resource-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+        
+        .emergency-contact {
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--secondary);
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Spielsucht Info</span>
+                </div>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="active">Start</a></li>
+                    <li><a href="#about">Über Spielsucht</a></li>
+                    <li><a href="#test">Selbsttest</a></li>
+                    <li><a href="#facts">Fakten</a></li>
+                    <li><a href="#resources">Hilfe & Ressourcen</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Digitale Spielsucht verstehen</h1>
+            <p>Informieren Sie sich über die Anzeichen, Risiken und Bewältigungsstrategien der digitalen Spielsucht. Unsere interaktive Plattform bietet Aufklärung, Selbsttests und Unterstützungsangebote.</p>
+            <a href="#test" class="btn">Zum Selbsttest</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">Was ist digitale Spielsucht?</h2>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header" style="background-color: var(--primary);">
+                        <i class="fas fa-exclamation-triangle"></i> Definition
+                    </div>
+                    <div class="card-body">
+                        <p>Digitale Spielsucht ist eine Verhaltenssucht, bei der die betroffene Person die Kontrolle über ihr Spielverhalten verliert. Dies betrifft sowohl Online- als auch Offline-Spiele auf Computern, Konsolen oder Mobilgeräten.</p>
+                        <p>Die Weltgesundheitsorganisation (WHO) hat "Gaming Disorder" 2018 als offizielle Krankheit anerkannt.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" style="background-color: var(--secondary);">
+                        <i class="fas fa-search"></i> Warnsignale
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Vernachlässigung von Alltagsaktivitäten</li>
+                            <li>Kontrollverlust über Spieldauer</li>
+                            <li>Fortwährendes Spielen trotz negativer Konsequenzen</li>
+                            <li>Entzugserscheinungen wie Unruhe oder Reizbarkeit</li>
+                            <li>Toleranzentwicklung (immer mehr Spielzeit nötig)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" style="background-color: var(--accent);">
+                        <i class="fas fa-heartbeat"></i> Auswirkungen
+                    </div>
+                    <div class="card-body">
+                        <p>Digitale Spielsucht kann verschiedene Lebensbereiche beeinträchtigen:</p>
+                        <ul>
+                            <li>Soziale Isolation und Beziehungsprobleme</li>
+                            <li>Vernachlässigung von Arbeit oder Schule</li>
+                            <li>Schlafmangel und körperliche Beschwerden</li>
+                            <li>Finanzielle Probleme durch In-Game-Käufe</li>
+                            <li>Psychische Probleme wie Depressionen oder Angst</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Test -->
+        <section id="test">
+            <h2 class="section-title">Selbsttest: Ist mein Spielverhalten problematisch?</h2>
+            <div class="test-container">
+                <p>Beantworten Sie die folgenden Fragen ehrlich, um eine erste Einschätzung zu erhalten. Dieser Test ersetzt keine professionelle Diagnose.</p>
+                
+                <div class="test-question">
+                    <p><strong>1. Denken Sie häufig an das Spielen, auch wenn Sie nicht spielen?</strong></p>
+                    <div class="test-options">
+                        <div class="test-option" data-value="0">Nie</div>
+                        <div class="test-option" data-value="1">Selten</div>
+                        <div class="test-option" data-value="2">Manchmal</div>
+                        <div class="test-option" data-value="3">Häufig</div>
+                        <div class="test-option" data-value="4">Sehr häufig</div>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <p><strong>2. Vernachlässigen Sie andere Aktivitäten oder Hobbys wegen des Spielens?</strong></p>
+                    <div class="test-options">
+                        <div class="test-option" data-value="0">Nie</div>
+                        <div class="test-option" data-value="1">Selten</div>
+                        <div class="test-option" data-value="2">Manchmal</div>
+                        <div class="test-option" data-value="3">Häufig</div>
+                        <div class="test-option" data-value="4">Sehr häufig</div>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <p><strong>3. Spielen Sie, um negativen Gefühlen wie Schuld, Angst oder Hilflosigkeit zu entfliehen?</strong></p>
+                    <div class="test-options">
+                        <div class="test-option" data-value="0">Nie</div>
+                        <div class="test-option" data-value="1">Selten</div>
+                        <div class="test-option" data-value="2">Manchmal</div>
+                        <div class="test-option" data-value="3">Häufig</div>
+                        <div class="test-option" data-value="4">Sehr häufig</div>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <p><strong>4. Haben Sie erfolglos versucht, Ihr Spielverhalten zu kontrollieren oder einzuschränken?</strong></p>
+                    <div class="test-options">
+                        <div class="test-option" data-value="0">Nie</div>
+                        <div class="test-option" data-value="1">Selten</div>
+                        <div class="test-option" data-value="2">Manchmal</div>
+                        <div class="test-option" data-value="3">Häufig</div>
+                        <div class="test-option" data-value="4">Sehr häufig</div>
+                    </div>
+                </div>
+                
+                <div class="test-question">
+                    <p><strong>5. Haben Sie wegen des Spielens Konflikte mit Familienmitgliedern oder Freunden?</strong></p>
+                    <div class="test-options">
+                        <div class="test-option" data-value="0">Nie</div>
+                        <div class="test-option" data-value="1">Selten</div>
+                        <div class="test-option" data-value="2">Manchmal</div>
+                        <div class="test-option" data-value="3">Häufig</div>
+                        <div class="test-option" data-value="4">Sehr häufig</div>
+                    </div>
+                </div>
+                
+                <button id="calculateTest" class="btn">Test auswerten</button>
+                
+                <div class="test-result" id="testResult">
+                    <h3>Ihr Ergebnis</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div id="riskLevel">Risikostufe: Niedrig</div>
+                    </div>
+                    <p id="resultText">Basierend auf Ihren Antworten scheint Ihr Spielverhalten unproblematisch zu sein. Es ist jedoch wichtig, aufmerksam zu bleiben und ein gesundes Gleichgewicht zu wahren.</p>
+                    <p id="adviceText">Tipp: Setzen Sie sich regelmäßig bewusste Offline-Zeiten und pflegen Sie andere Hobbys und soziale Kontakte.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Facts Section -->
+        <section id="facts">
+            <h2 class="section-title">Fakten über digitale Spielsucht</h2>
+            <div class="facts-container">
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Verbreitung</h3>
+                    <p>Schätzungsweise 3-4% der Gamer weltweit zeigen Anzeichen einer Spielsucht.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Neurologie</h3>
+                    <p>Spielsucht aktiviert dieselben Belohnungszentren im Gehirn wie Drogenabhängigkeit.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3>Altersgruppen</h3>
+                    <p>Besonders gefährdet sind Jugendliche und junge Erwachsene zwischen 14 und 24 Jahren.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Games</h3>
+                    <p>Die Verfügbarkeit von Mobile Games hat die Problematik in den letzten Jahren verstärkt.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources">
+            <h2 class="section-title">Hilfe & Ressourcen</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 2rem; color: var(--gray);">Anlaufstellen und Strategien für Betroffene und Angehörige</p>
+            
+            <div class="emergency-contact">
+                <i class="fas fa-phone-alt"></i> Telefonseelsorge: 0800 111 0 111 (kostenfrei, 24/7 erreichbar)
+            </div>
+            
+            <ul class="resources-list">
+                <li>
+                    <div class="resource-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div>
+                        <h3>Beratungsstellen</h3>
+                        <p>Kostenlose Beratung bei Suchtberatungsstellen vor Ort oder online.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="resource-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div>
+                        <h3>Selbsthilfegruppen</h3>
+                        <p>Online- und Offline-Selbsthilfegruppen für Betroffene und Angehörige.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div>
+                        <h3>Informationsmaterial</h3>
+                        <p>Broschüren und Leitfäden der Bundeszentrale für gesundheitliche Aufklärung.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div>
+                        <h3>Praktische Tools</h3>
+                        <p>Zeitmanagement-Apps, Sperrsoftware und Spielzeit-Tracker zur Selbstkontrolle.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Digitale Spielsucht</h3>
+                    <p>Eine interaktive Bildungsplattform zur Aufklärung über digitale Spielsucht, ihre Risiken und Bewältigungsstrategien.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Wichtige Links</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#home" style="color: #adb5bd; text-decoration: none;">Startseite</a></li>
+                        <li><a href="#about" style="color: #adb5bd; text-decoration: none;">Über Spielsucht</a></li>
+                        <li><a href="#test" style="color: #adb5bd; text-decoration: none;">Selbsttest</a></li>
+                        <li><a href="#resources" style="color: #adb5bd; text-decoration: none;">Hilfe & Ressourcen</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontakt</h3>
+                    <p>Haben Sie Fragen oder Anregungen? Schreiben Sie uns eine Nachricht.</p>
+                    <p style="margin-top: 10px;">info@spielsucht-info.de</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Digitale Spielsucht Info | Diese Seite dient Bildungszwecken und ersetzt keine professionelle Beratung.</p>
+                <p style="margin-top: 10px;">Icons von FontAwesome | Bilder von Unsplash</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Interactive Test
+        const testOptions = document.querySelectorAll('.test-option');
+        const calculateBtn = document.getElementById('calculateTest');
+        const testResult = document.getElementById('testResult');
+        const progressFill = document.getElementById('progressFill');
+        const riskLevel = document.getElementById('riskLevel');
+        const resultText = document.getElementById('resultText');
+        const adviceText = document.getElementById('adviceText');
+        
+        let selectedAnswers = [];
+        
+        // Initialize selected answers array
+        document.querySelectorAll('.test-question').forEach((question, index) => {
+            selectedAnswers[index] = -1; // -1 means no answer selected
+        });
+        
+        // Add click event to each test option
+        testOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Get question index from parent
+                const questionIndex = Array.from(document.querySelectorAll('.test-question')).indexOf(this.closest('.test-question'));
+                
+                // Remove selected class from all options in this question
+                this.parentElement.querySelectorAll('.test-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Store selected value
+                selectedAnswers[questionIndex] = parseInt(this.getAttribute('data-value'));
+            });
+        });
+        
+        // Calculate test result
+        calculateBtn.addEventListener('click', function() {
+            // Check if all questions are answered
+            const unanswered = selectedAnswers.filter(answer => answer === -1).length;
+            
+            if (unanswered > 0) {
+                alert('Bitte beantworten Sie alle Fragen, bevor Sie den Test auswerten.');
+                return;
+            }
+            
+            // Calculate total score
+            const totalScore = selectedAnswers.reduce((sum, value) => sum + value, 0);
+            const maxScore = selectedAnswers.length * 4; // 4 is the highest value per question
+            const percentage = (totalScore / maxScore) * 100;
+            
+            // Update progress bar
+            progressFill.style.width = `${percentage}%`;
+            
+            // Determine risk level and advice
+            let level, text, advice;
+            
+            if (percentage < 25) {
+                level = "Niedrig";
+                text = "Basierend auf Ihren Antworten scheint Ihr Spielverhalten unproblematisch zu sein. Es ist jedoch wichtig, aufmerksam zu bleiben und ein gesundes Gleichgewicht zwischen digitalen und nicht-digitalen Aktivitäten zu wahren.";
+                advice = "Setzen Sie sich regelmäßig bewusste Offline-Zeiten und pflegen Sie andere Hobbys und soziale Kontakte. Ein reflektierter Umgang mit Medien ist immer empfehlenswert.";
+            } else if (percentage < 50) {
+                level = "Moderat";
+                text = "Ihre Antworten deuten auf ein moderates Risiko hin. Möglicherweise bemerken Sie bereits erste negative Auswirkungen Ihres Spielverhaltens auf andere Lebensbereiche.";
+                advice = "Versuchen Sie, konkrete Zeitlimits für das Spielen festzulegen und halten Sie sich daran. Beobachten Sie, ob sich Ihr Spielverhalten auf wichtige Bereiche wie Arbeit, Schule oder Beziehungen auswirkt.";
+            } else if (percentage < 75) {
+                level = "Hoch";
+                text = "Ihre Antworten deuten auf ein erhöhtes Risiko für problematisches Spielverhalten hin. Möglicherweise haben Sie bereits Schwierigkeiten, die Spielzeit zu kontrollieren oder negative Konsequenzen erlebt.";
+                advice = "Es könnte hilfreich sein, professionelle Unterstützung in Anspruch zu nehmen. Wenden Sie sich an eine Suchtberatungsstelle oder sprechen Sie mit Ihrem Arzt. Dokumentieren Sie Ihre Spielzeiten genau.";
+            } else {
+                level = "Sehr hoch";
+                text = "Basierend auf Ihren Antworten weisen Sie mehrere Anzeichen einer möglichen Spielsucht auf. Es ist wahrscheinlich, dass Ihr Spielverhalten bereits erhebliche negative Auswirkungen auf Ihr Leben hat.";
+                advice = "Suchen Sie möglichst bald professionelle Hilfe auf. Kontaktieren Sie eine Suchtberatungsstelle oder vereinbaren Sie einen Termin bei einem auf Verhaltenssüchte spezialisierten Therapeuten. Sie müssen mit diesem Problem nicht alleine bleiben.";
+            }
+            
+            // Update result elements
+            riskLevel.textContent = `Risikostufe: ${level}`;
+            resultText.textContent = text;
+            adviceText.textContent = advice;
+            
+            // Show result
+            testResult.style.display = 'block';
+            testResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
